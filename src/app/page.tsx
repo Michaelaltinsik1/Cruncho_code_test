@@ -1,6 +1,7 @@
 'use client';
 import useGeoLocation from '@/Components/useGeolocation';
 import { NearbySearchResult } from '@/utils/types';
+import { calculateDistanceInKm } from '@/utils/calcDistance';
 import { useState } from 'react';
 import axios from 'axios';
 import React from 'react';
@@ -45,17 +46,30 @@ export default function Home() {
       <h1>Nearby restaurant finder</h1>
       {displayCoordinates()}
       <div>
-        <button onClick={handleSearch}>Search Nearby Places</button>
         <div>
-          {places.map((place) => {
+          {places.map((place, index) => {
             return (
               <React.Fragment key={place.reference}>
+                {index}
                 <h3>{place.name}</h3>
+                {location.coordinates.lat && location.coordinates.lng && (
+                  <p>
+                    Distance:{' '}
+                    {calculateDistanceInKm(
+                      location.coordinates.lat,
+                      location.coordinates.lng,
+                      place.geometry.location.lat,
+                      place.geometry.location.lng
+                    )}{' '}
+                    km
+                  </p>
+                )}
               </React.Fragment>
             );
           })}
         </div>
       </div>
+      <button onClick={handleSearch}>Search Nearby Places</button>
     </main>
   );
 }
