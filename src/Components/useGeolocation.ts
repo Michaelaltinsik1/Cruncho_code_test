@@ -1,18 +1,5 @@
 import { useState, useEffect } from 'react';
-
-interface LocationType {
-  loaded: boolean;
-  coordinates: {
-    lat: number | null;
-    lng: number | null;
-  };
-  error: ErrorType | null | null;
-}
-
-interface ErrorType {
-  code: number;
-  message: string;
-}
+import { LocationType, ErrorType } from '@/utils/types';
 
 const useGeoLocation = () => {
   const [location, setLocation] = useState<LocationType>({
