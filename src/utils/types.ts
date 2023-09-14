@@ -1,4 +1,4 @@
-export interface NearbySearchResult {
+export interface NearbySearchType {
   geometry: {
     location: {
       lat: number;

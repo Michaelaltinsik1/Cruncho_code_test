@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react';
 import { LocationType, ErrorType } from '@/utils/types';
-
+import { useLocationStore } from '@/store/locations';
 const useGeoLocation = () => {
-  const [location, setLocation] = useState<LocationType>({
-    loaded: false,
-    coordinates: { lat: null, lng: null },
-    error: null,
-  });
-
+  const { location, setLocation } = useLocationStore();
   const onSuccess = (location: GeolocationPosition) => {
     setLocation({
       loaded: true,
