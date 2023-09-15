@@ -93,8 +93,10 @@ const SingleNearbyPlace = ({ place }: NerbyPlaceType) => {
         </Distance>
       )}
       <ReviewContainer>
-        <p>Rating: {place.rating}</p>
-        <p>Reviews: {place.user_ratings_total}</p>
+        <p>Rating: {place.rating ? `${place.rating} / 5` : 'N/A'}</p>
+        <p>
+          Reviews: {place.user_ratings_total ? place.user_ratings_total : 0}
+        </p>
       </ReviewContainer>
     </Container>
   );

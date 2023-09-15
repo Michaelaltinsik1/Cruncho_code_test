@@ -22,12 +22,12 @@ const PlacesContainer = styled.div`
     gap: 16px;
     width: auto;
   }
-  @media (min-width: 1201px) {
+  @media (min-width: 1600px) {
     margin-top: 40px;
     margin-bottom: 48px;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    max-width: 80%;
+    max-width: 100%;
   }
 `;
 const NearbyPlacesContainer = ({

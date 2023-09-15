@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import Pagination from '@/Components/Pagination';
 import { SearchTypes } from '@/utils/types';
-const ELEMENTSPERPAGE = 10;
+const ELEMENTSPERPAGE = 5;
 
 const options = [
   { value: 'school', text: 'School' },
@@ -117,14 +117,13 @@ export default function Home() {
           const response = await axios.post('/api/places', {
             body: {
               location: `${location.coordinates.lat},${location.coordinates.lng}`,
-              radius: '6000',
               type: currType,
             },
           });
-
-          setPlaces(response.data.data.results);
+          const responseSliced = response.data.data.results.slice(0, 10);
+          setPlaces(responseSliced);
           if (response.data.data.results) {
-            setPages(calculateTotalPages(response.data.data.results.length));
+            setPages(calculateTotalPages(responseSliced.length));
             setCurrPage(1);
           }
         } catch (error) {
