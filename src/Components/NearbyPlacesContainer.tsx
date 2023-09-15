@@ -35,15 +35,11 @@ const NearbyPlacesContainer = ({
   elementsPerPage,
 }: NearbyPlacesContainer) => {
   const { places } = usePlacesStore();
-  console.log('CurrPage: ', currPage);
   const [lastIndex, setLastIndex] = useState<number>(
     Number(elementsPerPage) * Number(currPage)
   );
-  console.log('LastIndex: ', lastIndex);
   const firstIndex = Number(lastIndex) - Number(elementsPerPage);
-  console.log('firstIndex: ', firstIndex);
   const temporalPlaces = places?.slice(firstIndex, lastIndex);
-
   useEffect(() => {
     setLastIndex(Number(elementsPerPage) * Number(currPage));
   }, [currPage, elementsPerPage]);
