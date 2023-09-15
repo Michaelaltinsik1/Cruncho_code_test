@@ -12,6 +12,10 @@ const Container = styled.a`
   flex-direction: column;
   padding: 24px;
   border-radius: 12px;
+  min-width: 100%;
+  aspect-ratio: 5/3;
+  overflow: hidden;
+  justify-content: center;
   cursor: pointer;
   box-shadow: 0px 3px 8px 0px #e0f2f1;
   background-color: #fafafa;
@@ -20,6 +24,14 @@ const Container = styled.a`
   }
   &:active {
     background-color: #b2dfdb;
+  }
+  @media (min-width: 768px) {
+    max-width: 350px;
+    aspect-ratio: 1/1;
+  }
+  @media (min-width: 1201px) {
+    max-width: 350px;
+    aspect-ratio: 1/1;
   }
 `;
 
