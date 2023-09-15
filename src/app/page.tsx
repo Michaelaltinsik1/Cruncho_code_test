@@ -7,7 +7,17 @@ import { usePlacesStore } from '@/store/places';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Pagination from '@/Components/Pagination';
+import { SearchTypes } from '@/utils/types';
 const ELEMENTSPERPAGE = 10;
+
+const options = [
+  { value: 'school', text: 'School' },
+  { value: 'gym', text: 'Gym' },
+  { value: 'movie_theater', text: 'Movie theater' },
+  { value: 'restaurant', text: 'Restaurant' },
+  { value: 'pharmacy', text: 'Pharmacy' },
+  { value: 'library', text: 'Library' },
+];
 
 const MainWrapper = styled.main`
   min-height: 100vh;
@@ -34,11 +44,54 @@ const Coordinates = styled.p`
   line-height: 2rem;
   margin-bottom: 8px;
 `;
+
+const FindNearbyTypeText = styled.p`
+  font-size: 24px;
+  margin-top: 16px;
+`;
+
+const TypeSelect = styled.select`
+  margin-top: 4px;
+  padding: 16px 12px;
+  border-radius: 4px;
+  font-size: 20px;
+  border-right: 12px solid transparent;
+`;
+
+const SearchContainer = styled.div`
+  margin: 16px 0px;
+  display: flex;
+  flex-direction: column;
+`;
+const TypeLabel = styled.label`
+  font-size: 14px;
+  font-weight: bold;
+`;
 export default function Home() {
   const { places, setPlaces } = usePlacesStore();
   const [pages, setPages] = useState(0);
   const [currPage, setCurrPage] = useState(1);
+  const [currType, setCurrType] = useState('restaurant');
   const location = useGeoLocation();
+
+  const renderType = () => {
+    switch (currType) {
+      case SearchTypes.SCHOOL:
+        return 'schools';
+      case SearchTypes.GYM:
+        return 'gyms';
+      case SearchTypes.LIBRARY:
+        return 'libraries';
+      case SearchTypes.MOVIE_THEATER:
+        return 'movie theaters';
+      case SearchTypes.PHARMACY:
+        return 'pharmacies';
+      case SearchTypes.RESTAURANT:
+        return 'restaurants';
+      default:
+        return '';
+    }
+  };
 
   const calculateTotalPages = (totalElements: number): number => {
     return Math.ceil(totalElements / ELEMENTSPERPAGE);
@@ -65,7 +118,7 @@ export default function Home() {
             body: {
               location: `${location.coordinates.lat},${location.coordinates.lng}`,
               radius: '6000',
-              type: 'restaurant',
+              type: currType,
             },
           });
 
@@ -80,13 +133,28 @@ export default function Home() {
       }
     };
     handleFetch();
-  }, [location, setPlaces]);
+  }, [location, setPlaces, currType]);
 
   return (
     <MainWrapper>
       <PrimaryHeading>Nearby places finder</PrimaryHeading>
       {displayCoordinates()}
-
+      <SearchContainer>
+        <TypeLabel htmlFor="type-select">Search by</TypeLabel>
+        <TypeSelect
+          name="types"
+          id="type-select"
+          defaultValue={currType}
+          onChange={(e) => setCurrType(e.target.value)}
+        >
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.text}
+            </option>
+          ))}
+        </TypeSelect>
+      </SearchContainer>
+      <FindNearbyTypeText>Looking for nearby {renderType()}</FindNearbyTypeText>
       {places && (
         <NearbyPlacesContainer
           currPage={currPage}

@@ -53,3 +53,12 @@ export interface ErrorType {
   code: number;
   message: string;
 }
+
+export enum SearchTypes {
+  SCHOOL = 'school',
+  GYM = 'gym',
+  MOVIE_THEATER = 'movie_theater',
+  RESTAURANT = 'restaurant',
+  PHARMACY = 'pharmacy',
+  LIBRARY = 'library',
+}
