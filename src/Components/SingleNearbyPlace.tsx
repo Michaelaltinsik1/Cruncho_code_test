@@ -26,11 +26,11 @@ const Container = styled.a`
     background-color: #b2dfdb;
   }
   @media (min-width: 768px) {
-    max-width: 350px;
+    width: 350px;
     aspect-ratio: 1/1;
   }
   @media (min-width: 1201px) {
-    max-width: 350px;
+    width: 350px;
     aspect-ratio: 1/1;
   }
 `;
@@ -40,6 +40,13 @@ const PlacesHeader = styled.h2`
   color: #212121;
   font-size: 24px;
   margin-bottom: 16px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  @media (min-width: 768px) {
+    -webkit-line-clamp: 2;
+  }
 `;
 
 const ReviewContainer = styled.div`
@@ -56,6 +63,13 @@ const Address = styled.p`
   color: #212121;
   text-align: center;
   margin-bottom: 8px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  @media (min-width: 768px) {
+    -webkit-line-clamp: 2;
+  }
 `;
 const SingleNearbyPlace = ({ place }: NerbyPlaceType) => {
   const { location } = useLocationStore();
